@@ -8,7 +8,7 @@ A lightweight enhancement for the **default combined bag** in World of Warcraft 
 - **Columns** — set how many items per row (10–38) to control the bag's width.
 - **Split Bags** — start every bag on a new row, even when the previous row still has space.
 - **Item Level** — shows the item level on weapons and armor, optionally tinted with the item's quality color and scalable from 50% to 200%.
-- **Item Sync** — item tooltips list every character holding that item and how many, in class colors. Your own count is live; alts are recorded whenever their bags change, so an alt appears once you have played it with the addon enabled. Stackable items only, bags only (no bank).
+- **Item Sync** — item tooltips list every other character holding that item and how many, in class colors. Bags are recorded once at logout, so an alt appears after you have played it with the addon enabled. Stackable, non-soulbound items only, bags only (no bank).
 - **Live Settings** — every option applies immediately, even with the bag open.
 
 ## ⚙️ Configuration

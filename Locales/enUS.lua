@@ -21,7 +21,7 @@ local L = {
 
     -- Tooltip
     itemCounts          = "Item Sync",
-    itemCounts_desc     = "List every character holding the item, and how many, on its tooltip. Alt counts are recorded whenever that character's bags change. Only stackable items are tracked.",
+    itemCounts_desc     = "List every other character holding the item, and how many, on its tooltip. Their bags are recorded when they log out. Only stackable items that are not soulbound are tracked.",
 
     -- Bag settings
     splitBags           = "Split Bags",

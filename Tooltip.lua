@@ -7,17 +7,21 @@ local GetSlotInfo = C_Container.GetContainerItemInfo
 
 local db, me, realm
 local others = {}
-local stackable = {}
+local tracked = {}
 
-local function IsStackable(itemID)
-    local known = stackable[itemID]
+local function IsTracked(itemID)
+    local known = tracked[itemID]
 
     if known == nil then
-        local maxStack = select(8, C_Item.GetItemInfo(itemID))
+        -- 8 = max stack size, 14 = bind type
+        local maxStack, _, _, _, _, _, bindType = select(8, C_Item.GetItemInfo(itemID))
         if not maxStack then return false end
 
+        -- Soulbound items cannot reach another character, so they are never tracked.
         known = maxStack > 1
-        stackable[itemID] = known
+                and bindType ~= Enum.ItemBind.OnAcquire
+                and bindType ~= Enum.ItemBind.Quest
+        tracked[itemID] = known
     end
 
     return known
@@ -33,7 +37,7 @@ local function Store()
     for bag = 0, LAST_BAG do
         for slot = 1, GetNumSlots(bag) do
             local info = GetSlotInfo(bag, slot)
-            if info and IsStackable(info.itemID) then
+            if info and IsTracked(info.itemID) then
                 entry[info.itemID] = (entry[info.itemID] or 0) + info.stackCount
             end
         end
@@ -61,7 +65,7 @@ local function AddItemCounts(tooltip, data)
     if tooltip ~= GameTooltip and tooltip ~= ItemRefTooltip then return end
 
     local itemID = data and data.id
-    if not itemID or not IsStackable(itemID) then return end
+    if not itemID or not IsTracked(itemID) then return end
 
     wipe(others)
     for key, entry in pairs(InventorySync) do
@@ -70,15 +74,11 @@ local function AddItemCounts(tooltip, data)
         end
     end
 
-    local mine = C_Item.GetItemCount(itemID)
-    if mine == 0 and #others == 0 then return end
+    if #others == 0 then return end
 
     table.sort(others)
     tooltip:AddLine(" ")
 
-    if mine > 0 then
-        AddCharacter(tooltip, me, mine)
-    end
     for i = 1, #others do
         AddCharacter(tooltip, others[i], InventorySync[others[i]][itemID])
     end
@@ -92,16 +92,14 @@ function ns.InitTooltip()
 
     local f = CreateFrame("Frame")
     f:RegisterEvent("PLAYER_LOGIN")
-    f:SetScript("OnEvent", function(self, event)
+    f:RegisterEvent("PLAYER_LOGOUT")
+    f:SetScript("OnEvent", function(_, event)
         if event == "PLAYER_LOGIN" then
             realm = GetRealmName()
             me = UnitName("player") .. "-" .. realm
-
-            self:UnregisterEvent("PLAYER_LOGIN")
-            self:RegisterEvent("BAG_UPDATE_DELAYED")
         end
 
-        Store()
+        if event == "PLAYER_LOGOUT" then Store() end
     end)
 
     TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, AddItemCounts)
