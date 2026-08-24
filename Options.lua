@@ -2,8 +2,6 @@ local ADDON, ns = ...
 
 local category, layout, L
 
--- Every control takes its label from L[key] and its tooltip from L[key .. "_desc"],
--- so a setting is declared once here and worded once in the locale files.
 local function AddSetting(key)
     local default = ns.defaults[key]
     local setting = Settings.RegisterAddOnSetting(category, ADDON .. "_" .. key, key,
@@ -25,7 +23,6 @@ local function AddCheckbox(key)
     Settings.CreateCheckbox(category, AddSetting(key), L[key .. "_desc"])
 end
 
--- The suffix stays a literal: "%" reads the same in every language.
 local function AddSlider(key, min, max, stepSize, suffix)
     local options = Settings.CreateSliderOptions(min, max, stepSize)
     options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right, function(value)

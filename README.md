@@ -1,54 +1,27 @@
-### 🌟 BetterCombinedBag
+# 🎒 MorthenBags
 
-BetterCombinedBag is a simple and lightweight addon for World of Warcraft (Retail) that enhances the default combined backpack without replacing it. It gives you more control over your bag's layout and information through targeted customizations, while keeping the look and feel of the default Blizzard UI.
+A lightweight enhancement for the **default combined bag** in World of Warcraft Retail. It hooks the frame Blizzard already draws instead of replacing it, so you keep the native look and feel — no extra frames, no polling.
 
-It hooks the frame Blizzard already draws instead of building its own bag, so there are no extra frames, no polling, and only three event registrations while the bag is open.
+## ✨ Features
 
-### ✨ Features
+- **Reagent Bag Integration** — draws the reagent bag inside the combined bag, separated by a divider line, so you only have one bag window.
+- **Columns** — set how many items per row (10–38) to control the bag's width.
+- **Split Bags** — start every bag on a new row, even when the previous row still has space.
+- **Item Level** — shows the item level on weapons and armor, optionally tinted with the item's quality color and scalable from 50% to 200%.
+- **Item Sync** — item tooltips list every character holding that item and how many, in class colors. Your own count is live; alts are recorded whenever their bags change, so an alt appears once you have played it with the addon enabled. Stackable items only, bags only (no bank).
+- **Live Settings** — every option applies immediately, even with the bag open.
 
-**Reagent Bag Integration**: Draws the reagent bag inside the combined backpack, so you only have one single, unified bag window, with a divider line marking where the reagent section starts.
+## ⚙️ Configuration
 
-**Flexible Column Layout**: Define the number of item columns (Columns) to customize the width of your bag.
+`Esc` → `Options` → `AddOns` → `MorthenBags`
 
-**Split Bags**: Each bag starts on a new row, regardless of the space left in the previous one, for better visual organization.
+Settings are saved per character. Recorded item counts are saved account-wide, so every character sees the same list.
 
-**Item Level Display**: Shows the item level of weapons and armor directly on their icon, optionally colored by item quality and scaled to your liking.
+## 🌍 Localization
 
-**Character Item Counts**: Item tooltips list every character holding that item and how many, with names in their class color. Your own count is read live; alt counts are recorded whenever that character's bags change, so an alt shows up once you have played it with the addon enabled. Only stackable items are tracked, since gear is one-per-slot noise in an alt list. Bag contents only, bank not included.
+Available in **English** and **German**. Untranslated strings fall back to English, so partial translations are always safe.
 
-Every setting applies immediately, even with the bag open.
+## 📋 Notes
 
-### ⚙️ Configuration
-
-All settings can be configured through the standard in-game addon options menu:
-
-`Esc` > `Options` > `AddOns` > `BetterCombinedBag`
-
-Settings are stored per character. Recorded item counts are stored account-wide, so every character sees the same list.
-
-### 📋 Notes
-
-The addon keeps the `combinedBags` CVar enabled, since everything it does hangs off the combined bag frame. Disable the addon if you want separate bag windows.
-
-### 🌍 Localization
-
-Available in **English** and **German**. Every user-facing string lives in `Locales/`, one file per language.
-
-`enUS.lua` is the base table and is always loaded. Each other locale file bails out immediately unless it matches the client, then overrides only the keys it translates:
-
-```lua
-if GetLocale() ~= "frFR" then return end
-
-local _, ns = ...
-local L = ns.L
-
-L.splitBags = "Séparer les sacs"
-```
-
-Anything a locale leaves out keeps its English wording, so a partial translation is always safe to ship. Adding a language means dropping in one file and listing it in the `.toc` after `enUS.lua` — no code changes.
-
-Labels come from `L[key]` and tooltips from `L[key .. "_desc"]`, where `key` is the setting name. A key no locale defines renders as its own name instead of erroring, which makes a gap easy to spot.
-
-### 🎯 Compatibility
-
-Built for **Retail 12.1** (`## Interface: 120100`).
+- Built for **Retail 12.1**.
+- The `combinedBags` CVar is kept enabled, since everything hangs off the combined bag frame. Disable the addon if you want separate bag windows.

@@ -1,8 +1,5 @@
 local _, ns = ...
 
--- Base language. Every other locale file overwrites only the keys it actually
--- translates and inherits the rest, so a partial translation is always safe and
--- no fallback logic is needed anywhere else.
 local L = {
     -- Section headers
     header_general      = "General",
@@ -36,6 +33,4 @@ local L = {
     combinedBagsForced  = "Separate bags are not supported, combined bags stay enabled. Disable the addon to use separate bags.",
 }
 
--- A key that no locale defines shows up as its own name rather than erroring on
--- a nil string, which makes a gap obvious without breaking the options panel.
 ns.L = setmetatable(L, { __index = function(_, key) return key end })

@@ -21,7 +21,6 @@ local levelShown = false
 
 -- Item level ----------------------------------------------------------------
 
--- Reused so a full bag walk does not allocate one location table per slot.
 local location = ItemLocation:CreateEmpty()
 
 local function GetItemLevel(bag, slot, itemID)
@@ -33,7 +32,7 @@ local function GetItemLevel(bag, slot, itemID)
     location:SetBagAndSlot(bag, slot)
     local level = C_Item.GetCurrentItemLevel(location)
 
-    -- Tabards, shirts and cosmetics all sit at 1 and are only noise.
+    -- Tabards, shirts and cosmetics all sit at 1.
     return (level and level > 1) and level or nil
 end
 
@@ -42,15 +41,15 @@ local function SetItemLevel(button, info)
             and GetItemLevel(button:GetBagID(), button:GetID(), info.itemID)
 
     if not level then
-        if button.BCBItemLevel then button.BCBItemLevel:Hide() end
+        if button.ItemLevelLabel then button.ItemLevelLabel:Hide() end
         return
     end
 
-    local text = button.BCBItemLevel
+    local text = button.ItemLevelLabel
     if not text then
         text = button:CreateFontString(nil, "OVERLAY", "GameFontNormalOutline")
         text:SetPoint("BOTTOMRIGHT", 0, 1)
-        button.BCBItemLevel = text
+        button.ItemLevelLabel = text
     end
 
     text:SetScale(db.itemLevelScale / 100)
@@ -68,7 +67,6 @@ local function SetItemLevel(button, info)
 end
 
 local function RefreshItemLevels()
-    -- Nothing to draw and nothing left over from before: skip the walk.
     if not (db.itemLevel or levelShown) then return end
     levelShown = false
 
@@ -127,8 +125,6 @@ local function OnWatchedEvent(_, event, bag, slot)
     end
 end
 
--- Blizzard drives its own slots from the container frame they belong to. These
--- are ours, so they share one listener instead of registering three events each.
 local function CreateWatcher()
     -- Parented to the bag frame, so it only listens while the bag is open.
     local watcher = CreateFrame("Frame", nil, frame)
@@ -136,8 +132,7 @@ local function CreateWatcher()
     watcher:SetScript("OnHide", watcher.UnregisterAllEvents)
     watcher:SetScript("OnEvent", OnWatchedEvent)
 
-    -- The bag is already open the first time we get here, and a frame created
-    -- inside a visible parent does not fire OnShow.
+    -- A frame created inside a visible parent does not fire OnShow.
     StartWatching(watcher)
 end
 
@@ -151,14 +146,10 @@ local function EnsureReagentSlots(count)
         local button = CreateFrame("ItemButton", ADDON .. "ReagentSlot" .. i, frame,
                 "ContainerFrameItemButtonTemplate")
 
-        -- Matches the slot art Blizzard draws on its own bag buttons. Pinned to a
-        -- negative sublevel so it is always behind the icon rather than wherever
-        -- creation order happens to put it.
         local background = button:CreateTexture(nil, "BACKGROUND", nil, -1)
         background:SetAllPoints()
         background:SetAtlas("bags-item-slot64", TextureKitConstants.IgnoreAtlasSize)
 
-        -- Silence the template's own event handling; we update these by hand.
         button:UnregisterAllEvents()
         button:SetScript("OnEvent", nil)
         button:SetScript("OnShow", nil)
@@ -193,8 +184,6 @@ local function BreakRow()
     end
 end
 
--- Without a line above them the reagent slots read as one more row of the last
--- bag. It spans the slot area, centered in the row it reserves.
 local function PlaceDivider()
     if not reagentDivider then
         reagentDivider = frame:CreateTexture(nil, "ARTWORK")
@@ -237,7 +226,6 @@ local function CountRows(withReagents)
         rows = math.ceil(slots / columns)
     end
 
-    -- The reagent bag always starts on a row of its own.
     if withReagents then
         rows = rows + math.ceil(GetNumSlots(REAGENT_BAG) / columns)
     end
@@ -249,8 +237,6 @@ local function ApplyLayout()
     local reagentSlots = db.addReagentsBag and GetNumSlots(REAGENT_BAG) or 0
     local withReagents = reagentSlots > 0
 
-    -- With split bags on, a bag narrower than the column count would pad every
-    -- row it owns with dead space, so let the widest bag cap the frame.
     columns = db.columns
     if db.splitBags then
         local widest = WidestBag(withReagents)
@@ -267,8 +253,7 @@ local function ApplyLayout()
 
     frame:SetSize(columns * STEP - ITEM_GAP + BORDER * 2, height)
 
-    -- Blizzard reuses and reshuffles its buttons, so re-index them by bag and
-    -- slot before walking the bags in display order.
+    -- Blizzard reuses and reshuffles its buttons, so re-index them by bag and slot.
     for _, button in frame:EnumerateValidItems() do
         local slots = itemButtons[button:GetBagID()]
         if slots then slots[button:GetID()] = button end
@@ -306,12 +291,9 @@ local function ApplyLayout()
     end
 
     if db.addReagentsBag then
-        -- An unanchored frame is not drawn, which keeps Blizzard's reagent
-        -- window out of the way without fighting its show/hide logic.
+        -- An unanchored frame is not drawn.
         ContainerFrame6:ClearAllPoints()
     elseif ContainerFrame6:GetNumPoints() == 0 then
-        -- We unanchored it earlier, so hide it and let Blizzard place it again
-        -- the next time the bags open.
         ContainerFrame6:Hide()
     end
 end
@@ -330,8 +312,6 @@ local function CenterSearchBox(self)
     end
 end
 
--- Re-run the layout after a setting changes, instead of waiting for the next
--- bag update to pick it up.
 function ns.Refresh()
     if frame:IsShown() then
         ApplyLayout()

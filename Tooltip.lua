@@ -6,23 +6,14 @@ local GetNumSlots = C_Container.GetContainerNumSlots
 local GetSlotInfo = C_Container.GetContainerItemInfo
 
 local db, me, realm
-
--- Reused, so building a tooltip does not allocate a table every time.
 local others = {}
-
--- Max stack size is a fixed property of an item, so one lookup per item ID per
--- session is enough no matter how often the bags are rescanned.
 local stackable = {}
 
--- Gear and other one-per-slot items are noise in an alt list, so they are
--- neither recorded nor shown.
 local function IsStackable(itemID)
     local known = stackable[itemID]
 
     if known == nil then
         local maxStack = select(8, C_Item.GetItemInfo(itemID))
-        -- Not in the client's cache yet: skip it this pass rather than caching
-        -- an answer we cannot trust. Anything in a bag is normally cached.
         if not maxStack then return false end
 
         known = maxStack > 1
@@ -34,18 +25,11 @@ end
 
 -- Recording -----------------------------------------------------------------
 
--- Item IDs are numbers and "class" is a string, so both live in one flat table
--- without colliding, which keeps the saved file small.
 local function Store()
-    -- Reuse the stored table instead of building a new one: this now runs on
-    -- every bag update, and dropping a few hundred keys on the collector each
-    -- time would be the most expensive thing the addon does.
     local entry = InventorySync[me] or {}
     wipe(entry)
     entry.class = select(2, UnitClass("player"))
 
-    -- Bags only. The bank is outside this addon's scope, so its contents are
-    -- deliberately not counted.
     for bag = 0, LAST_BAG do
         for slot = 1, GetNumSlots(bag) do
             local info = GetSlotInfo(bag, slot)
@@ -61,8 +45,7 @@ end
 -- Display -------------------------------------------------------------------
 
 local function AddCharacter(tooltip, key, count)
-    -- Character names never contain a hyphen, but realm names do (Azjol-Nerub),
-    -- so only split once.
+    -- Realm names can contain a hyphen (Azjol-Nerub), character names cannot.
     local name, charRealm = strsplit("-", key, 2)
     local entry = InventorySync[key]
     local color = entry and RAID_CLASS_COLORS[entry.class]
@@ -82,8 +65,6 @@ local function AddItemCounts(tooltip, data)
 
     wipe(others)
     for key, entry in pairs(InventorySync) do
-        -- Skip our own recorded entry; the live count below says the same thing
-        -- without depending on a scan having landed yet.
         if key ~= me and entry[itemID] then
             others[#others + 1] = key
         end
@@ -109,9 +90,6 @@ function ns.InitTooltip()
     db = ns.db
     InventorySync = InventorySync or {}
 
-    -- BAG_UPDATE_DELAYED is Blizzard's own coalesced "the bags have settled"
-    -- event, so one rescan per batch of changes keeps the saved copy current
-    -- without any throttle of our own. The login pass seeds it.
     local f = CreateFrame("Frame")
     f:RegisterEvent("PLAYER_LOGIN")
     f:SetScript("OnEvent", function(self, event)
