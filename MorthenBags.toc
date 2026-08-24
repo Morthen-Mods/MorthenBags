@@ -1,6 +1,6 @@
 ## Interface: 120100
 ## Title: MorthenBags
-## Version: 5.0.0
+## Version: 1.0.0
 ## Author: Morthen
 ## Notes: A simple and lightweight enhancement for the default combined bag.
 ## SavedVariables: InventorySync
