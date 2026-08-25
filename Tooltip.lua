@@ -8,10 +8,9 @@ local db, me, realm
 local charData = {}
 
 local function IsTrackable(itemID)
-    local maxStack = select(8, GetItemInfo(itemID))
-    local bindType = select(14, GetItemInfo(itemID))
+    local maxStack, _, _, _, _, _, bindType = select(8, GetItemInfo(itemID))
 
-    return maxStack > 1 and bindType ~= Enum.ItemBind.OnAcquire and bindType ~= Enum.ItemBind.Quest
+    return maxStack and maxStack > 1 and bindType ~= Enum.ItemBind.OnAcquire and bindType ~= Enum.ItemBind.Quest
 end
 
 local function LoadCharData()

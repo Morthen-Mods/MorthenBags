@@ -1,5 +1,5 @@
 # --- Configuration ---
-$sourceFiles = Get-ChildItem -Path . -Recurse -Include *.lua, *.toc -File
+$sourceFiles = Get-ChildItem -Path . -Recurse -Include *.lua, *.toc, *.png -File
 $destinationFolder = "./.build"
 
 # --- Find .toc file ---
