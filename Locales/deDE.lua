@@ -22,9 +22,9 @@ L.itemLevelScale      = "Größe der Gegenstandsstufe"
 L.itemLevelScale_desc = "Größe des Textes der Gegenstandsstufe."
 
 -- Tooltip
-L.itemCounts          = "Items Synchronisation"
-L.itemCounts_desc     = "Listet im Tooltip alle anderen Charaktere auf, die den Gegenstand besitzen, und wie viele. Deren Taschen werden beim Ausloggen erfasst. Es werden nur stapelbare Gegenstände erfasst, die nicht seelengebunden sind."
-L.itemCounts_chars    = "Andere Charaktere:"
+L.itemSync          = "Items Synchronisation"
+L.itemSync_desc     = "Listet im Tooltip alle anderen Charaktere auf, die den Gegenstand besitzen, und wie viele. Deren Taschen werden beim Ausloggen erfasst. Es werden nur stapelbare Gegenstände erfasst, die nicht seelengebunden sind."
+L.itemSync_chars    = "Andere Charaktere:"
 
 -- Bag settings
 L.splitBags           = "Taschen trennen"

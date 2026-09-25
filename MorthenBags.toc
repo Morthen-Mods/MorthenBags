@@ -14,6 +14,7 @@ Locales\enUS.lua
 Data\DataHandler.lua
 
 # Shared code - should do stuff on its own
+Shared\ItemSync.lua
 
 # Forever
 

@@ -22,9 +22,9 @@ local L = {
     itemLevelScale_desc = "Size of the item level text.",
 
     -- Tooltip
-    itemCounts          = "Item Sync",
-    itemCounts_desc     = "List every other character holding the item, and how many, on its tooltip. Their bags are recorded when they log out. Only stackable items that are not soulbound are tracked.",
-    itemCounts_chars    = "Other Characters:",
+    itemSync            = "Item Sync",
+    itemSync_desc       = "List every other character holding the item, and how many, on its tooltip. Their bags are recorded when they log out. Only stackable items that are not soulbound are tracked.",
+    itemSync_chars      = "Other Characters:",
 
     -- Bag settings
     splitBags           = "Split Bags",
