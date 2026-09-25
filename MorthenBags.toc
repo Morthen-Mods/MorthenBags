@@ -1,6 +1,6 @@
-## Interface: 120100
+## Interface: 16001, 120100
 ## Title: MorthenBags
-## Version: 1.0.3
+## Version: 2.0.0
 ## Author: Morthen
 ## Notes: A simple and lightweight enhancement for the default combined bag.
 ## SavedVariables: InventorySync
@@ -8,11 +8,13 @@
 ## Category: Morthen UI
 ## IconTexture: Interface\AddOns\MorthenBags\Logo.png
 
-# Localization: enUS is the base, every other file overrides only what it translates
-Locales\enUS.lua
-Locales\deDE.lua
+# Data and Locales - should be used by both
+Data/DataHandler.lua
 
-Core.lua
-Bag.lua
-Tooltip.lua
-Options.lua
+# Shared code - should do stuff on its own
+
+# Forever
+
+# Mainline
+
+# Core
