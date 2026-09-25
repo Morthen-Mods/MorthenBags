@@ -9,7 +9,9 @@
 ## IconTexture: Interface\AddOns\MorthenBags\Logo.png
 
 # Data and Locales - should be used by both
-Data/DataHandler.lua
+Locales\deDE.lua
+Locales\enUS.lua
+Data\DataHandler.lua
 
 # Shared code - should do stuff on its own
 
@@ -18,3 +20,4 @@ Data/DataHandler.lua
 # Mainline
 
 # Core
+Core.lua

@@ -1,5 +1,5 @@
 local addonName, MB = ...
-DataHandler = {}
+local handler = {}
 
 local settingsTable = "BagSettings"
 
@@ -7,7 +7,7 @@ local f = CreateFrame("Frame")
 f:RegisterEvent("ADDON_LOADED")
 
 f:SetScript("OnEvent", function(_, event, name)
-    if event == "ADDON_LOADED" and name == addonName then DataHandler.OnLoad() end
+    if event == "ADDON_LOADED" and name == addonName then handler.OnLoad() end
 end)
 
 local function DeepCopy(source)
@@ -32,7 +32,7 @@ local function DeepMerge(target, source)
     end
 end
 
-function DataHandler.OnLoad()
+function handler.OnLoad()
     for key, defaults in pairs(MB.Settings.defaults) do
         MB.Settings[key] = DeepCopy(defaults)
 
@@ -45,20 +45,22 @@ function DataHandler.OnLoad()
     end
 end
 
-function DataHandler.SetSetting(key, value)
+function handler.SetSetting(key, value)
     local setting = MB.Settings[settingsTable]
     setting[key] = value
 end
 
-function DataHandler.GetSetting(key)
+function handler.GetSetting(key)
    local settings = MB.Settings[settingsTable]
    return settings[key]
 end
 
-function DataHandler.GetDefault(key)
+function handler.GetDefault(key)
    local defaults = MB.Settings.defaults[settingsTable]
    return defaults[key]
 end
+
+MB.DataHandler = handler
 
 MB.Settings = {
     defaults = {
