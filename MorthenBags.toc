@@ -16,12 +16,10 @@ Data\DataHandler.lua
 # Shared code - should do stuff on its own
 Shared\ItemSync.lua
 Shared\OptionsBase.lua
+Shared\BagButton.lua
 
-# Forever
-Forever\OptionsMenu.lua     [AllowLoadGameType camelot]
-
-# Mainline
-Mainline\OptionsMenu.lua    [AllowLoadGameType standard]
+# Camelot/Standard files
+[Game]\OptionsMenu.lua
 
 # Core
 Core.lua
