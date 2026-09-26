@@ -18,9 +18,10 @@ Shared\ItemSync.lua
 Shared\OptionsBase.lua
 
 # Forever
-Forever\OptionsMenu.lua [AllowLoadGameType forever]
+Forever\OptionsMenu.lua     [AllowLoadGameType camelot]
 
 # Mainline
+Mainline\OptionsMenu.lua    [AllowLoadGameType standard]
 
 # Core
 Core.lua
