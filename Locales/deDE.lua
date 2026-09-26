@@ -6,14 +6,14 @@ local L = ns.L
 -- Section headers
 L.header_general      = "Allgemein"
 L.header_general_desc = "Komfortoptionen für die kombinierte Tasche."
-L.header_tooltip      = "Tooltip"
-L.header_tooltip_desc = "Zusätzliche Informationen in Gegenstands-Tooltips."
 L.header_bag          = "Tascheneinstellungen"
 L.header_bag_desc     = "Legt fest, wie die Tasche ihre Plätze anordnet."
 
 -- General
 L.addReagentsBag      = "Materialtasche einfügen"
 L.addReagentsBag_desc = "Zeigt die Materialtasche innerhalb der kombinierten Tasche an, statt in einem eigenen Fenster."
+L.addKeyring          = "Schlüsselbund einfügen"
+L.addKeyring_desc     = "Zeigt den Schlüsselbund innerhalb der kombinierten Tasche an, statt in einem eigenen Fenster."
 L.itemLevel           = "Gegenstandsstufe anzeigen"
 L.itemLevel_desc      = "Zeigt die Gegenstandsstufe auf Waffen und Rüstung an."
 L.itemLevelColor      = "Gegenstandsstufe einfärben"
@@ -22,9 +22,9 @@ L.itemLevelScale      = "Größe der Gegenstandsstufe"
 L.itemLevelScale_desc = "Größe des Textes der Gegenstandsstufe."
 
 -- Tooltip
-L.itemSync          = "Items Synchronisation"
-L.itemSync_desc     = "Listet im Tooltip alle anderen Charaktere auf, die den Gegenstand besitzen, und wie viele. Deren Taschen werden beim Ausloggen erfasst. Es werden nur stapelbare Gegenstände erfasst, die nicht seelengebunden sind."
-L.itemSync_chars    = "Andere Charaktere:"
+L.itemSync            = "Items Synchronisation"
+L.itemSync_desc       = "Listet im Tooltip alle anderen Charaktere auf, die den Gegenstand besitzen, und wie viele. Deren Taschen werden beim Ausloggen erfasst. Es werden nur stapelbare Gegenstände erfasst, die nicht seelengebunden sind."
+L.itemSync_chars      = "Andere Charaktere:"
 
 -- Bag settings
 L.splitBags           = "Taschen trennen"

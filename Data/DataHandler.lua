@@ -45,6 +45,10 @@ function handler.OnLoad()
     end
 end
 
+function handler.GetSettings()
+    return MB.Settings[settingsTable]
+end
+
 function handler.SetSetting(key, value)
     local setting = MB.Settings[settingsTable]
     setting[key] = value

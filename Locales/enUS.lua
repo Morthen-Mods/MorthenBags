@@ -4,8 +4,6 @@ local L = {
     -- Section headers
     header_general      = "General",
     header_general_desc = "Quality of life tweaks for the combined bag.",
-    header_tooltip      = "Tooltip",
-    header_tooltip_desc = "Extra information shown on item tooltips.",
     header_bag          = "Bag Settings",
     header_bag_desc     = "Control how the bag arranges its slots.",
 
@@ -13,7 +11,7 @@ local L = {
     addReagentsBag      = "Add Reagent Bag",
     addReagentsBag_desc = "Draw the reagent bag inside the combined bag instead of in its own window.",
     addKeyring          = "Add Keyring",
-    addKeyring_desc     = "",
+    addKeyring_desc     = "Draw the Keyring inside the combined bag instead of in its own window.",
     itemLevel           = "Show Item Level",
     itemLevel_desc      = "Show the item level on weapons and armor.",
     itemLevelColor      = "Color Item Level",

@@ -15,8 +15,10 @@ Data\DataHandler.lua
 
 # Shared code - should do stuff on its own
 Shared\ItemSync.lua
+Shared\OptionsBase.lua
 
 # Forever
+Forever\OptionsMenu.lua [AllowLoadGameType forever]
 
 # Mainline
 
