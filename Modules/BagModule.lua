@@ -205,16 +205,15 @@ end
 
 local function GetKeyringSlots()
     local index = Enum.BagIndex.Keyring
-    local visibleSlots = 4
-    for i = 5, GetBagSlots(index) do
-        if GetSlotInfo(index, i) == nil then
-            return visibleSlots
-        end
+    local minSlots = 4
 
-        visibleSlots = i
+    for slot = GetBagSlots(index), minSlots + 1, -1 do
+        if GetSlotInfo(index, slot) ~= nil then
+            return slot
+        end
     end
 
-    return visibleSlots
+    return minSlots
 end
 
 local function CountRows(withReagents, withKeyring)
