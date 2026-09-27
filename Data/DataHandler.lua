@@ -7,7 +7,12 @@ local f = CreateFrame("Frame")
 f:RegisterEvent("ADDON_LOADED")
 
 f:SetScript("OnEvent", function(_, event, name)
-    if event == "ADDON_LOADED" and name == addonName then handler.OnLoad() end
+    if event == "ADDON_LOADED" and name == addonName then
+        handler.OnLoad()
+
+        local flavor = C_AddOns.GetAddOnMetadata(addonName, "X-MB-Game-Flavor")
+        MB.GameFlavor = flavor
+    end
 end)
 
 local function DeepCopy(source)
@@ -43,6 +48,18 @@ function handler.OnLoad()
 
         _G[key] = MB.Settings[key]
     end
+end
+
+function handler.IsForever()
+    return MB.GameFlavor == "Camelot"
+end
+
+function handler.IsRetail()
+    return MB.GameFlavor == "Standard"
+end
+
+function handler.IsSupported()
+    return (handler.IsForever() or handler.IsRetail())
 end
 
 function handler.GetSettings()

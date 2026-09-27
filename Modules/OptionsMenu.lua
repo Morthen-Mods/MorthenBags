@@ -1,6 +1,5 @@
 local addonName, MB = ...
 
-local options = {}
 local lang = MB.lang
 local handler = MB.DataHandler
 local category, layout
@@ -16,24 +15,16 @@ local function Setting(key)
     return setting
 end
 
-function options.Init()
-    category, layout = Settings.RegisterVerticalLayoutCategory(addonName)
-end
-
-function options.Build()
-    Settings.RegisterAddOnCategory(category)
-end
-
-function options.AddHeader(key)
+local function AddHeader(key)
     local init = CreateSettingsListSectionHeaderInitializer(lang[key], lang[key .. "_desc"])
     layout:AddInitializer(init)
 end
 
-function options.AddCheckbox(key)
+local function AddCheckbox(key)
     Settings.CreateCheckbox(category, Setting(key), lang[key .. "_desc"])
 end
 
-function options.AddSlider(key, min, max, stepSize, suffix)
+local function AddSlider(key, min, max, stepSize, suffix)
     local slider = Settings.CreateSliderOptions(min, max, stepSize)
     slider:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right, function(value)
         return value .. suffix
@@ -42,4 +33,25 @@ function options.AddSlider(key, min, max, stepSize, suffix)
     Settings.CreateSlider(category, Setting(key), slider, lang[key .. "_desc"])
 end
 
-MB.Options = options
+function MB.InitOptionsMenu()
+    category, layout = Settings.RegisterVerticalLayoutCategory(addonName)
+
+    AddHeader("header_general")
+    AddCheckbox("addReagentsBag")
+    if handler.IsForever() then
+        AddCheckbox("addKeyring")
+    end
+    AddCheckbox("itemSync")
+
+    if handler.IsRetail() then
+        AddCheckbox("itemLevel")
+        AddCheckbox("itemLevelColor")
+        AddSlider("itemLevelScale", 50, 200, 5, "%")
+    end
+
+    AddHeader("header_bag")
+    AddCheckbox("splitBags")
+    AddSlider("columns", 10, 38, 1, "")
+
+    Settings.RegisterAddOnCategory(category)
+end

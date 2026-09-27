@@ -8,19 +8,22 @@
 ## Category: Morthen UI
 ## IconTexture: Interface\AddOns\MorthenBags\Logo.png
 
+## X-MB-Game-Flavor: [Game]
+
 # Data and Locales - should be used by both
 Locales\deDE.lua
 Locales\enUS.lua
 Data\DataHandler.lua
 
-# Shared code - should do stuff on its own
-Shared\ItemSync.lua
-Shared\OptionsBase.lua
-Shared\BagBase.lua
-Shared\BagButton.lua
+# Modules
+Modules\BagButton.lua
+Modules\ItemSync.lua
+Modules\OptionsMenu.lua
 
-# Camelot/Standard files
-[Game]\OptionsMenu.lua
+# Shared code - should do stuff on its own
+Shared\BagBase.lua
+
+
 
 # Core
 Core.lua

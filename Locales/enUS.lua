@@ -32,6 +32,10 @@ local L = {
 
     -- Messages
     combinedBagsForced  = "Separate bags are not supported, combined bags stay enabled. Disable the addon to use separate bags.",
+
+    -- Divider titles
+    reagents            = "Reagents",
+    keyring             = "Keyring"
 }
 
 MB.lang = setmetatable(L, { __index = function(_, key) return key end })
