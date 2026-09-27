@@ -1,7 +1,6 @@
 if GetLocale() ~= "deDE" then return end
-
-local _, ns = ...
-local L = ns.L
+local _, MB = ...
+local L = MB.lang
 
 -- Section headers
 L.header_general      = "Allgemein"

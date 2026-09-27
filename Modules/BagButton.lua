@@ -34,23 +34,6 @@ function BagButton:UpdateLockedState(info)
     SetItemButtonDesaturated(self, info and info.isLocked or false)
 end
 
-function BagButton:UpdateItemLevelComponent(level, r , g, b)
-    local iLvl = self.ItemLevelComponent
-
-    if not handler.GetSetting("itemLevel") then
-        iLvl:Hide()
-        return
-    end
-
-    iLvl:SetText(level)
-
-    if handler.GetSetting("itemLevelColor") then
-        iLvl:SetTextColor(r or 1, g or 1, b or 1)
-    else iLvl:SetTextColor(1, 1, 1) end
-
-    iLvl:Show()
-end
-
 function MB.CreateBagButton(bag, slot)
     local f = CreateFrame("ItemButton",
     addonName .. bag .. "Slot" .. slot, ContainerFrameCombinedBags,"ContainerFrameItemButtonTemplate")

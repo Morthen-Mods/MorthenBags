@@ -5,6 +5,11 @@ local f = CreateFrame("Frame")
 f:RegisterEvent("ADDON_LOADED")
 
 f:SetScript("OnEvent", function(self, event, arg)
+    if not MB.DataHandler.IsSupported() then
+        f:UnregisterAllEvents()
+        return
+    end
+
     if event == "ADDON_LOADED" and arg == addonName then
         MB.InitItemSync()
         MB.InitOptionsMenu()

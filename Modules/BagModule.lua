@@ -4,7 +4,6 @@ local bags = {}
 local lang = MB.lang
 local handler = MB.DataHandler
 local bagFrame
-local flavor
 
 local GetBagSlots = C_Container.GetContainerNumSlots
 local GetSlotInfo = C_Container.GetContainerItemInfo
@@ -54,8 +53,6 @@ function bags.CacheBagButtons()
     if bagFrame == nil then return end
 
     buttonCache = {}
-
-    local test = 0
     for _, btn in bagFrame:EnumerateValidItems() do
         if btn ~= nil then
             if btn.ItemLevelComponent == nil then
@@ -70,8 +67,6 @@ function bags.CacheBagButtons()
                 buttonCache[btn:GetBagID()] = {}
             end
             buttonCache[btn:GetBagID()][btn:GetID()] = btn
-
-            test = test + 1
         end
     end
 end
@@ -109,11 +104,6 @@ local dividerHeight = 16
 local headerHeight = 60
 local chromeHeight = 90 -- everything above and below the slots
 local currencyHeight = 20
-
-function MB.InitBagBase(version)
-    bagFrame = ContainerFrameCombinedBags
-    flavor = version
-end
 
 local function Place(button)
     button:ClearAllPoints()
@@ -362,11 +352,7 @@ local function RefreshItemLevels()
                     component:SetTextColor(1, 1, 1)
                 end
 
-                if iLvlScale then
-                    component:SetScale(handler.GetSetting("itemLevelScale") / 100)
-                else
-                    component:SetScale(1)
-                end
+                component:SetScale(handler.GetSetting("itemLevelScale") / 100)
             end
         end
     end
