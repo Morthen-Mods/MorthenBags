@@ -19,11 +19,7 @@ Data\DataHandler.lua
 Modules\BagButton.lua
 Modules\ItemSync.lua
 Modules\OptionsMenu.lua
-
-# Shared code - should do stuff on its own
-Shared\BagBase.lua
-
-
+Modules\BagModule.lua
 
 # Core
 Core.lua

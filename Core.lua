@@ -8,7 +8,9 @@ f:SetScript("OnEvent", function(self, event, arg)
     if event == "ADDON_LOADED" and arg == addonName then
         MB.InitItemSync()
         MB.InitOptionsMenu()
+        MB.InitBagLayout()
 
+        C_CVar.SetCVar(bagCVar, "1")
         self:UnregisterEvent("ADDON_LOADED")
         self:RegisterEvent("CVAR_UPDATE")
     end

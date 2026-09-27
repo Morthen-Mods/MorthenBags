@@ -60,11 +60,6 @@ function MB.CreateBagButton(bag, slot)
     bg:SetAllPoints()
     bg:SetAtlas("bags-item-slot64", TextureKitConstants.IgnoreAtlasSize)
 
-    local iLvl = f:CreateFontString(nil, "OVERLAY", "GameFontNormalOutline")
-    iLvl:SetPoint("BOTTOMRIGHT", f, 0, 1)
-    iLvl:SetTextColor(1, 1, 1, 1)
-    f.ItemLevelComponent = iLvl
-
     f:SetScript("OnShow", f.OnShow)
 
     f:SetBagID(bag)
