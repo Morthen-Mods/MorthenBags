@@ -1,7 +1,8 @@
 local addonName, MB = ...
-local handler = {}
+MB.GameFlavor = C_AddOns.GetAddOnMetadata(addonName, "X-MB-Game-Flavor")
 
 local settingsTable = "BagSettings"
+local handler = {}
 
 local f = CreateFrame("Frame")
 f:RegisterEvent("ADDON_LOADED")
@@ -9,9 +10,6 @@ f:RegisterEvent("ADDON_LOADED")
 f:SetScript("OnEvent", function(_, event, name)
     if event == "ADDON_LOADED" and name == addonName then
         handler.OnLoad()
-
-        local flavor = C_AddOns.GetAddOnMetadata(addonName, "X-MB-Game-Flavor")
-        MB.GameFlavor = flavor
     end
 end)
 

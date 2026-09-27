@@ -51,7 +51,7 @@ end
 
 local function AddTooltipLine(tooltip, key, count)
     local entry = InventorySync[key]
-    local color = RAID_CLASS_COLORS[entry.class]
+    local color = RAID_CLASS_COLORS[entry.class] or HIGHLIGHT_FONT_COLOR
     if count ~= nil and count > 0 then
         tooltip:AddDoubleLine(entry.name, count, color.r, color.g, color.b, 1, 1, 1)
     end

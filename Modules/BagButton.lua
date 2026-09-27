@@ -1,5 +1,4 @@
 local addonName, MB = ...
-local handler = MB.DataHandler
 local BagButton = {}
 
 local function GetSlotInfo(button)

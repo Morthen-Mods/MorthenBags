@@ -213,6 +213,8 @@ local function GetKeyringSlots()
 
         visibleSlots = i
     end
+
+    return visibleSlots
 end
 
 local function CountRows(withReagents, withKeyring)
@@ -272,9 +274,11 @@ local function ApplyLayout()
 
     for bag = 0, 4 do
         local slots = buttonCache[bag]
-        for slot = 1, GetBagSlots(bag) do
-            local btn = slots[slot]
-            if btn ~= nil then Place(btn) end
+        if slots ~= nil then
+            for slot = 1, GetBagSlots(bag) do
+                local btn = slots[slot]
+                if btn ~= nil then Place(btn) end
+            end
         end
 
         if handler.GetSetting("splitBags") then BreakRow() end
@@ -329,30 +333,30 @@ end
 local function RefreshItemLevels()
     local iLvlDisplay = handler.GetSetting("itemLevel")
     local iLvlColor = handler.GetSetting("itemLevelColor")
-    local iLvlScale = handler.GetSetting("itemLevelScale")
 
     for bag = 0, 4 do
         local buttons = buttonCache[bag]
-        for slot = 1, GetBagSlots(bag) do
-            local btn = buttons[slot]
-            if btn ~= nil and btn.ItemLevelComponent ~= nil then
-                local itemLevel, quality = GetItemLevelAndQuality(bag, slot)
-                local component = btn.ItemLevelComponent
-                if itemLevel ~= nil and iLvlDisplay then
-                    component:SetText(itemLevel)
-                    component:Show()
-                else
-                    component:Hide()
-                end
+        if buttons ~= nil then
+            for slot = 1, GetBagSlots(bag) do
+                local btn = buttons[slot]
+                if btn ~= nil and btn.ItemLevelComponent ~= nil then
+                    local itemLevel, quality = GetItemLevelAndQuality(bag, slot)
+                    local component = btn.ItemLevelComponent
+                    if itemLevel ~= nil and iLvlDisplay then
+                        component:SetScale(handler.GetSetting("itemLevelScale") / 100)
+                        component:SetText(itemLevel)
+                        component:Show()
+                    else
+                        component:Hide()
+                    end
 
-                if quality ~= nil and iLvlColor then
-                    local r, g, b = C_Item.GetItemQualityColor(quality)
-                    component:SetTextColor(r, g, b)
-                else
-                    component:SetTextColor(1, 1, 1)
+                    if quality ~= nil and iLvlColor then
+                        local r, g, b = C_Item.GetItemQualityColor(quality)
+                        component:SetTextColor(r, g, b)
+                    else
+                        component:SetTextColor(1, 1, 1)
+                    end
                 end
-
-                component:SetScale(handler.GetSetting("itemLevelScale") / 100)
             end
         end
     end
@@ -372,9 +376,11 @@ function MB.InitBagLayout()
     end
 
     -- Keep Keyring hidden
-    hooksecurefunc(ContainerFrame2, "SetPoint", function(self)
-        if handler.GetSetting("addKeyring") then self:ClearAllPoints() end
-    end)
+    if handler.IsForever() then
+        hooksecurefunc(ContainerFrame2, "SetPoint", function(self)
+            if handler.GetSetting("addKeyring") then self:ClearAllPoints() end
+        end)
+    end
 
     -- Keep Reagents bag hidden
     hooksecurefunc(ContainerFrame6, "SetPoint", function(self)

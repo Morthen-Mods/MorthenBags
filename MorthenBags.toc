@@ -11,8 +11,8 @@
 ## X-MB-Game-Flavor: [Game]
 
 # Data and Locales - should be used by both
-Locales\deDE.lua
 Locales\enUS.lua
+Locales\deDE.lua
 Data\DataHandler.lua
 
 # Modules

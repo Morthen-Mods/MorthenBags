@@ -33,3 +33,7 @@ L.columns_desc        = "Maximale Anzahl an Gegenständen pro Zeile. Bei aktivie
 
 -- Messages
 L.combinedBagsForced  = "Getrennte Taschen werden nicht unterstützt, kombinierte Taschen bleiben aktiviert. Deaktiviere das AddOn, um getrennte Taschen zu verwenden."
+
+-- Divider titles
+L.reagents            = "Reagents"
+L.keyring             = "Keyring"
